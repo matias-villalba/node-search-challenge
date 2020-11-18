@@ -1,3 +1,7 @@
+const Autocomplete = require('../autocomplete/Autocomplete3');
+const Suggestions = require('../autocomplete/Suggestions');
+const filterByTitle = require('../filters/titleFilterStrategy')
+
 class SimpleAutocompleteController {
   /**
    * Performs a case insensitive contains search on book titles.
@@ -8,9 +12,10 @@ class SimpleAutocompleteController {
    * @param searchTerm the term to search for.
    */
   static index(searchTerm) {
-    // TODO: Implement this.
+    const data = Suggestions.load();
+
     return {
-      result: [],
+      result: new Autocomplete(data, filterByTitle).performSearch(searchTerm),
     };
   }
 }
