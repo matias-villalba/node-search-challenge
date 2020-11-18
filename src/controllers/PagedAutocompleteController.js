@@ -1,3 +1,9 @@
+const Suggestions = require('../autocomplete/Suggestions');
+const Autocomplete = require('../autocomplete/Autocomplete3');
+const Paginator = require('../autocomplete/Paginator');
+const filterByTitle = require('../filters/titleFilterStrategy')
+
+
 class PagedAutocompleteController {
   /**
    * Performs a case insensitive contains search on book titles, returning
@@ -21,11 +27,15 @@ class PagedAutocompleteController {
    * @param pageStart parameter to indicate where to start the page.
    */
   static index(searchTerm, count, pageStart) {
-    // TODO: Implement this.
-    return {
-      status: {},
-      result: [],
-    };
+    count = parseInt(count);
+    count = isNaN(count) || count < 0 ? 15 : count;
+    pageStart = parseInt(pageStart);
+    pageStart = isNaN(pageStart) || pageStart < 0 ? 0 : pageStart;
+
+    const data = Suggestions.load();
+    const autocomplete = new Autocomplete(data, filterByTitle);
+    const paginator = new Paginator(autocomplete.performSearch.bind(autocomplete, searchTerm));
+    return paginator.getItems(pageStart, count)
   }
 }
 
