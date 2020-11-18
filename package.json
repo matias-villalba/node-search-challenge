@@ -15,6 +15,7 @@
     "nodemon": "^1.12.1"
   },
   "dependencies": {
+    "querystring": "^0.2.0",
     "server": "^1.0.4"
   }
 }
