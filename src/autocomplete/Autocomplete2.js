@@ -10,9 +10,17 @@ class Autocomplete2 {
    * This should perform a case sensitive prefix search.
    */
   performSearch(searchTerm) {
-    // TODO: Implement this.
-    return [];
+    if (!searchTerm || searchTerm.trim() === '') {
+      return [];
+    }
+    const isPrefix = this._isPrefix.bind(this, searchTerm);
+    return this.suggestions.filter(isPrefix);
   }
+
+  _isPrefix(searchTerm, s) {
+    return s.title && s.title.startsWith(searchTerm);
+  }
+
 }
 
 module.exports = Autocomplete2;
